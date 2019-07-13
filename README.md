@@ -1,6 +1,6 @@
 ## Description
 Build your own Wireless Weather station. This station includes:
-- Tempetarure
+- Temperature
 - Humidity
 - Pressure
 - Rain Level
@@ -8,13 +8,20 @@ Build your own Wireless Weather station. This station includes:
 - Wind direction
 - Battery monitor
 
+Please note, this is not the final version, things will change but in general it is operationable
+
+## Operation mode
+Wind speed and rain gets detected by pin change interrupt of ATTINYs. 
+There is a power hungry device called WEMOS D1 mini pro, which deep sleeps most time. 
+Every few minutes, it wakes up, collect data from other devices by I2C, send everything to your MQTT broker and sleeps again.
+
 ## Project site
 You find all 3D printed parts at Thingiverse 
 https://www.thingiverse.com/thing:3718078
 
 ## BOM
 This package includes software for the following components
-- 2x ATTINY85 (wind speed, ran and battery level)
+- 2x ATTINY85 (wind speed, rain and battery level)
 - 1x ATTINY24 (wind direction)
 - Wemos D1 Mini pro (or other ESP8266 device)
 - BME280
