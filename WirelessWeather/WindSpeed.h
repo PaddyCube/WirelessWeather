@@ -179,5 +179,6 @@ void WindSpeed::resetData()
   Wire.write(senddata);
 
   Wire.endTransmission();
+  delay(10);
 }
 
