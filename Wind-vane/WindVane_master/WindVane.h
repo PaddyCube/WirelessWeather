@@ -11,7 +11,8 @@ class WindVane {
     WindVane(void);
     bool  begin(uint8_t addr = WINDVANE_ADDRESS);
     int getIntPosition();
-    String getCharPosition();
+    void getCharPosition(char* charpos);
+    unsigned int getByte();
 
   private:
     uint8_t   _i2caddr;
@@ -36,55 +37,65 @@ bool WindVane::begin(uint8_t a)
 }
 
 //----------------------------------
+// Read raw byte
+//----------------------------------
+unsigned int WindVane::getByte()
+{
+  Wire.requestFrom(_i2caddr, 3);
+  while (Wire.available())
+  {
+    Serial.println(Wire.read());
+  }
+  return 1;
+}
+//----------------------------------
 // Get wind direction as integer
 //----------------------------------
 int WindVane::getIntPosition()
 {
-  int pos = 999;
-  int data = 999;
 
-  // Startzeichen lesen
-  Wire.requestFrom(0x5, 1);
+  unsigned int pos = 0;
+  unsigned int startdata = 0;
+  unsigned int enddata = 0;
+  byte received_byte;
+  int i = 0;
+
+  Wire.requestFrom(_i2caddr, 3);
   while (Wire.available())
   {
-    data = Wire.read();
-  }
+    received_byte = Wire.read();
 
-  delay(50);
+    switch (i) {
+      case 0:
+        startdata = received_byte;
+        break;
 
-  // Startzeichen war gültig, Nutzdaten lesen
-  if (data == 200)
-  {
+      case 1:
+        pos = received_byte;
+        break;
 
-    Wire.requestFrom(0x5, 1);
-    while (Wire.available())
-    {
-      pos = Wire.read();
+      case 2:
+        enddata = received_byte;
+        break;
     }
-  }
 
-  delay(50);
+    i++;
+  }  // while Wire.available
 
-  // Stopzeichen lesen
-  Wire.requestFrom(0x5, 1);
-  while (Wire.available())
+  // check for valid start and stop signs
+  if (startdata != 200 or enddata != 251)
   {
-    data = Wire.read();
+    pos = 999;
   }
 
-  if (data == 251)
-  {
-    return pos;
-  }
-
-  return 999;
+  return pos;
 
 }
 
 //----------------------------------
 // Get wind direction as Char
 //----------------------------------
-String WindVane::getCharPosition()
+void WindVane::getCharPosition(char * charpos)
 {
   int pos;
 
@@ -92,57 +103,58 @@ String WindVane::getCharPosition()
 
   switch (pos) {
     case 1:
-      return "N";
+      strncpy(charpos, "N", 4);
       break;
     case 3:
-      return "NNO";
+      strncpy(charpos, "NNO", 4);
       break;
     case 2:
-      return "NO";
+      strncpy(charpos, "NO", 4);
       break;
     case 6:
-      return "ONO";
+      strncpy(charpos,  "ONO", 4);
       break;
     case 4:
-      return "O";
+      strncpy(charpos, "O", 4);
       break;
     case 12:
-      return "OSO";
+      strncpy(charpos,  "OSO", 4);
       break;
     case 8:
-      return "SO";
+      strncpy(charpos,  "SO", 4);
       break;
     case 24:
-      return "SSO";
+      strncpy(charpos, "SSO", 4);
       break;
     case 16:
-      return "S";
+      strncpy(charpos,  "S", 4);
       break;
     case 48:
-      return "SSW";
+      strncpy(charpos, "SSW", 4);
       break;
     case 32:
-      return "SW";
+      strncpy(charpos, "SW", 4);
       break;
     case 96:
-      return "WSW";
+      strncpy(charpos, "WSW", 4);
       break;
     case 64:
-      return "W";
+      strncpy(charpos,  "W", 4);
       break;
     case 192:
-      return "WNW";
+      strncpy(charpos,  "WNW", 4);
       break;
     case 128:
-      return "NW";
+      strncpy(charpos,  "NW", 4);
       break;
     case 129:
-      return "NNW";
+      strncpy(charpos,  "NNW", 4);
       break;
     default:
-      return "ERR";
+      strncpy(charpos,  "ERR", 4);
       break;
   }
+
 
 }
 

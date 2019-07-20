@@ -5,6 +5,7 @@
 #include "WindSpeed.h"
 #include "Battery.h"
 #include "WindVane.h"
+#include "settings.h"
 
 WindSpeed wind;
 Battery battery;
@@ -14,12 +15,6 @@ Adafruit_BME280 bme;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
-
-const char* SSID = "YOUR-SSID";
-const char* PSK = "YourPassword";
-const char* MQTT_BROKER = "192.168.1.1";
-
-
 
 long lastMsg = 0;
 char msg[50];
@@ -34,10 +29,10 @@ char windpos[4];
 char batvalue[10];
 
 void setup() {
-  
+
   Serial.begin(115200);
   setup_wifi();
-  client.setServer(MQTT_BROKER, 1883);
+  client.setServer(MQTT_BROKER, MQTT_PORT);
 
   Wire.begin(); // join i2c bus (address optional for master)
   Wire.setClockStretchLimit(1500); // for some reason needed for ATTINY85
@@ -47,6 +42,7 @@ void setup() {
   windvane.begin();
   Serial.println(bme.begin(0x76));
   Wire.setClockStretchLimit(1500); // for some reason needed for ATTINY85
+Serial.println("Setup");
 }
 
 void setup_wifi() {
@@ -66,6 +62,7 @@ void setup_wifi() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
+
 }
 
 void reconnect() {
@@ -95,7 +92,6 @@ float measureVoltage() {
 
 }
 void loop() {
-
   float lv_temp;
   float lv_pressure;
   float lv_humidity;
@@ -112,21 +108,16 @@ void loop() {
   Serial.print("Publish message: ");
   Serial.println(msg);
 
+  delay(10);
   // Read data from BME280
   lv_temp = bme.readTemperature();
   lv_pressure = bme.readPressure();
   lv_humidity = bme.readHumidity();
 
-
   // convert results to char
   dtostrf(lv_temp, 6, 2, temp);
   dtostrf(lv_pressure, 6, 2, pressure);
   dtostrf(lv_humidity, 6, 2, humidity);
-
-  //send my MQTT
-  client.publish("/WirelessWeather/Temperature", temp );
-  client.publish("/WirelessWeather/Pressure", pressure );
-  client.publish("/WirelessWeather/Humidity", humidity );
 
 
   delay(20);
@@ -137,25 +128,33 @@ void loop() {
 
   itoa(lv_wind, windvalue, 10);
   itoa(lv_rain, rainvalue, 10);
-  client.publish("/WirelessWeather/Wind", windvalue );
-  client.publish("/WirelessWeather/Rain", rainvalue );
-  client.publish("/WirelessWeather/WindDir", windpos );
-
 
   delay(20);
   // battery level
   lv_battery = battery.getBattery(false);
   itoa(lv_battery, batvalue, 10);
-  client.publish("/WirelessWeather/Battery", batvalue);
 
 
   //  dtostrf(measureVoltage(), 6, 2, msg);
   //  client.publish("/WirelessWeather/Battery", msg);
 
-  // Sleep for 3 Minute
-  //  ESP.deepSleep(3 * 60 * 1000000);
+  //send by MQTT
+  client.publish("/WirelessWeather/Temperature", temp );
+  client.publish("/WirelessWeather/Pressure", pressure );
+  client.publish("/WirelessWeather/Humidity", humidity );
+  client.publish("/WirelessWeather/Wind", windvalue );
+  client.publish("/WirelessWeather/Rain", rainvalue );
+  client.publish("/WirelessWeather/WindDir", windpos );
+  client.publish("/WirelessWeather/Battery", batvalue);
 
-  delay(5000);
+
+
+  delay(100);
+  //   Sleep for x Minute
+  //    ESP.deepSleep(SLEEP_MIN * 60 * 1000000);
+  ESP.deepSleep(1 * 10 * 1000000);
+delay(100);
+  // delay(5000);
 
 
 

@@ -764,4 +764,6 @@ Wire Wire Line
 	11200 3100 11200 1600
 Wire Wire Line
 	11200 1600 11000 1600
+Text Notes 7450 7500 0    50   ~ 0
+Wireless Weather
 $EndSCHEMATC

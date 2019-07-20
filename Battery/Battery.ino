@@ -1,7 +1,7 @@
 
 // Code for the ATtiny85
 
-#include <Wire.h>
+#include <TinyWireS.h>
 #define I2C_SLAVE_ADDRESS 0x3 // Address of the slave
 
 #include <avr/sleep.h>
@@ -40,10 +40,10 @@ void setup()
   MCUSR &= ~(1 << WDRF); // reset status flag
   wdt_disable();
 
-  Wire.begin(I2C_SLAVE_ADDRESS); // join i2c network
+  TinyWireS.begin(I2C_SLAVE_ADDRESS); // join i2c network
   USICR |= 1 << USIWM0; // Clock stretching?
-  Wire.onRequest(requestEvent);
-  Wire.onReceive(receiveEvent);
+  TinyWireS.onRequest(requestEvent);
+  TinyWireS.onReceive(receiveEvent);
 
   analogReference(DEFAULT);
 
@@ -54,10 +54,6 @@ void setup()
 
 void sleep() {
 
-  GIMSK |= _BV(PCIE);                     // Enable Pin Change Interrupts
-  PCMSK |= _BV(PCINT3);                   // Use PB3 as interrupt pin
-  PCMSK |= _BV(PCINT4);                   // Use PB4 as interrupt pin
-
   ADCSRA &= ~_BV(ADEN);                   // ADC off
   set_sleep_mode(SLEEP_MODE_PWR_DOWN);    // replaces above statement
 
@@ -66,34 +62,29 @@ void sleep() {
   sleep_cpu();                            // sleep
 
   cli();                                  // Disable interrupts
-  PCMSK &= ~_BV(PCINT3);                  // Turn off PB3 as interrupt pin
-  PCMSK &= ~_BV(PCINT4);                  // Turn off PB4 as interrupt pin
   sleep_disable();                        // Clear SE bit
   ADCSRA |= _BV(ADEN);                    // ADC on
-  //WDTCR |= _BV(WDIE);                    // Watchdog on
 
   sei();                                  // Enable interrupts
 } // sleep
 
-
-ISR(PCINT0_vect) {
-  // DO NOTHING HERE, CATCH EVERYTHING IN LOOP
-}
-
-
-
 void loop()
 {
 
-  delay(10);
+  tws_delay(10);
+    TinyWireS_stop_check();
+    
   // read analog value of battery
   battery_raw = analogRead(ADC_PIN);
+  if (battery_raw == 0)
+    battery_raw = 1;
 
-  // Sift read value to i2c register
+  // Shift read value to i2c register
   i2c_regs[0] = battery_raw >> 8;
   i2c_regs[1] = battery_raw & 0xFF;
 
   // Go back to sleep
+
   sleep();
 
 }
@@ -102,15 +93,15 @@ void loop()
 void requestEvent()
 {
 
-  Wire.write(chksum1);
+  TinyWireS.send(chksum1);
 
   reg_position = 0;
-  Wire.write(i2c_regs[reg_position]);
-  
-  reg_position++;
-  Wire.write(i2c_regs[reg_position]);
+  TinyWireS.send(i2c_regs[reg_position]);
 
-  Wire.write(chksum2);
+  reg_position++;
+  TinyWireS.send(i2c_regs[reg_position]);
+
+  TinyWireS.send(chksum2);
 }
 
 // Gets called when the ATtiny receives an i2c write slave request
@@ -118,13 +109,13 @@ void receiveEvent(uint8_t howMany)
 {
 
   uint8_t  request = 0;
-  
-  while (0 < Wire.available()) {
+
+  while (0 < TinyWireS.available()) {
 
     // Transmission codes:
     // 3 = Reboot Sensor
 
-    request = Wire.read();
+    request = TinyWireS.receive();
 
     switch (request) {
 

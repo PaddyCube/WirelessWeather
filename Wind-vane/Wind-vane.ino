@@ -1,7 +1,7 @@
 
 // Code for the ATtiny24
 
-#include <Wire.h>
+#include <TinyWireS.h>
 #define I2C_SLAVE_ADDRESS 0x5 // Address of the slave
 
 #include <avr/sleep.h>
@@ -37,10 +37,10 @@ void setup()
   MCUSR &= ~(1 << WDRF); // reset status flag
   wdt_disable();
 
-  Wire.begin(I2C_SLAVE_ADDRESS); // join i2c network
+  TinyWireS.begin(I2C_SLAVE_ADDRESS); // join i2c network
   USICR |= 1 << USIWM0;
-  Wire.onReceive(receiveEvent);
-  Wire.onRequest(requestEvent);
+  TinyWireS.onReceive(receiveEvent);
+  TinyWireS.onRequest(requestEvent);
 
   pinMode(pinPos1, INPUT_PULLUP);
   pinMode(pinPos2, INPUT_PULLUP);
@@ -50,15 +50,6 @@ void setup()
   pinMode(pinPos6, INPUT_PULLUP);
   pinMode(pinPos7, INPUT_PULLUP);
   pinMode(pinPos8, INPUT_PULLUP);
-  //  digitalWrite(pinPos1, HIGH);
-  //  digitalWrite(pinPos2, HIGH);
-  //  digitalWrite(pinPos3, HIGH);
-  //  digitalWrite(pinPos4, HIGH);
-  //  digitalWrite(pinPos5, HIGH);
-  //  digitalWrite(pinPos6, HIGH);
-  //  digitalWrite(pinPos7, HIGH);
-  //  digitalWrite(pinPos8, HIGH);
-
 
 } // setup
 
@@ -82,8 +73,9 @@ void sleep() {
 void loop()
 {
   // Everything is handeled by I2C request function
-  delay(10);
+   tws_delay(10);
 
+  TinyWireS_stop_check();
   // Go back to sleep
   sleep();
 
@@ -127,9 +119,9 @@ void requestEvent()
 
   uint8_t pos;
   pos = getWindVanePosition();
-  Wire.write(chksum1);
-  Wire.write(pos);
-  Wire.write(chksum2);
+  TinyWireS.send(chksum1);
+  TinyWireS.send(pos);
+  TinyWireS.send(chksum2);
 }
 
 
@@ -142,9 +134,9 @@ void receiveEvent(uint8_t howMany)
   // Transmission codes:
   // 3 = Reboot Sensor
 
-  while (0 < Wire.available()) {
+  while (0 < TinyWireS.available()) {
 
-    request = Wire.read();
+    request = TinyWireS.receive();
 
     switch (request) {
 

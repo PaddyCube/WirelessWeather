@@ -1,7 +1,7 @@
 
 // Code for the ATtiny85
 
-#include <Wire.h>
+#include <TinyWireS.h>
 #define I2C_SLAVE_ADDRESS 0x4 // Address of the slave
 
 #include <avr/sleep.h>
@@ -41,10 +41,10 @@ void setup()
   MCUSR &= ~(1 << WDRF); // reset status flag
   wdt_disable();
 
-  Wire.begin(I2C_SLAVE_ADDRESS); // join i2c network
+  TinyWireS.begin(I2C_SLAVE_ADDRESS); // join i2c network
   USICR |= 1 << USIWM0; // Clock stretching?
-  Wire.onRequest(requestEvent);
-  Wire.onReceive(receiveEvent);
+  TinyWireS.onRequest(requestEvent);
+  TinyWireS.onReceive(receiveEvent);
 
   pinMode(pinWindCount, INPUT_PULLUP);
   digitalWrite(pinWindCount, HIGH);
@@ -127,7 +127,7 @@ void loop()
     lastrain = thisrain; //switch state ready for next time
   }
   // Go back to sleep
-  delay(1); // wait 2ms for software debouncing
+  tws_delay(1); // wait 2ms for software debouncing
   sleep();
 
 }
@@ -138,14 +138,14 @@ void loop()
 void requestEvent()
 {
 
-  Wire.write(chksum1);
-  Wire.write(windcount1);
-  Wire.write(windcount2);
-  Wire.write(windcount3);
-  Wire.write(raincount1);
-  Wire.write(raincount2);
-  Wire.write(raincount3);
-  Wire.write(chksum2);
+  TinyWireS.send(chksum1);
+  TinyWireS.send(windcount1);
+  TinyWireS.send(windcount2);
+  TinyWireS.send(windcount3);
+  TinyWireS.send(raincount1);
+  TinyWireS.send(raincount2);
+  TinyWireS.send(raincount3);
+  TinyWireS.send(chksum2);
 }
 
 // Gets called when the ATtiny receives an i2c write slave request
@@ -155,14 +155,14 @@ void receiveEvent(uint8_t howMany)
   uint8_t
   request = 0;
   // cli();
-  while (0 < Wire.available()) {
+  while (0 < TinyWireS.available()) {
 
     // Transmission codes:
     // 1 = Reset Rain Sensor
     // 2 = Reset Wind Sensor
     // 3 = Reboot Rain Sensor
 
-    request = Wire.read();
+    request = TinyWireS.receive();
 
     switch (request) {
       case 1:

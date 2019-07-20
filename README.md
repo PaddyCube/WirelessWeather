@@ -31,6 +31,7 @@ Moreover you need some device to program ATTINYs. This can be done with any Ardu
 ## Required Software
 For ATTINYs, you need this package
 https://github.com/SpenceKonde/ATTinyCore
+https://github.com/rambo/TinyWire
 
 For Wemos, I used this one
 https://arduino.esp8266.com/stable/package_esp8266com_index.json

@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:PCB-cache
 EELAYER 29 0
 EELAYER END
 $Descr A4 11693 8268
@@ -60,11 +61,11 @@ Connection ~ 1350 1200
 Wire Wire Line
 	1550 1200 1550 1050
 Wire Wire Line
-	1350 1200 1550 1200
+	1350 1200 1450 1200
 Wire Wire Line
 	1100 900  1350 900 
 Wire Wire Line
-	1350 800  1850 800 
+	1350 800  1450 800 
 Wire Wire Line
 	1850 800  1850 750 
 Connection ~ 1350 800 
@@ -80,12 +81,12 @@ F 3 "~" H 2450 1000 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
-	1850 800  2450 800 
+	1850 800  2200 800 
 Wire Wire Line
 	2450 800  2450 850 
 Connection ~ 1850 800 
 Wire Wire Line
-	2450 1150 2150 1150
+	2450 1150 2200 1150
 Wire Wire Line
 	2150 1150 2150 1050
 $Comp
@@ -145,7 +146,7 @@ F 3 "~" H 3500 1450 50  0001 C CNN
 	0    -1   1    0   
 $EndComp
 Wire Wire Line
-	3350 1450 3350 2050
+	3350 1450 3350 1700
 Wire Wire Line
 	3350 2050 3300 2050
 Wire Wire Line
@@ -180,9 +181,9 @@ Wire Wire Line
 Wire Wire Line
 	3700 2700 4000 2700
 Wire Wire Line
-	4000 2700 4000 2050
+	4000 2700 4000 2550
 Wire Wire Line
-	3400 2700 3400 2400
+	3400 2700 3400 2550
 Wire Wire Line
 	3400 2400 3600 2400
 Wire Wire Line
@@ -766,4 +767,83 @@ Wire Wire Line
 	11200 1600 11000 1600
 Text Notes 7450 7500 0    50   ~ 0
 Wireless Weather
+$Comp
+L Device:C_Small C7
+U 1 1 5D33E396
+P 3500 1700
+F 0 "C7" V 3271 1700 50  0000 C CNN
+F 1 "1uF (Ceramic)" V 3362 1700 50  0000 C CNN
+F 2 "" H 3500 1700 50  0001 C CNN
+F 3 "~" H 3500 1700 50  0001 C CNN
+	1    3500 1700
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3600 1750 3600 1700
+Wire Wire Line
+	3400 1700 3350 1700
+Connection ~ 3350 1700
+Wire Wire Line
+	3350 1700 3350 2050
+$Comp
+L Device:C_Small C8
+U 1 1 5D350CBD
+P 3800 2550
+F 0 "C8" V 3571 2550 50  0000 C CNN
+F 1 "1uF (ceramic)" V 3662 2550 50  0000 C CNN
+F 2 "" H 3800 2550 50  0001 C CNN
+F 3 "~" H 3800 2550 50  0001 C CNN
+	1    3800 2550
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3950 2550 4000 2550
+Connection ~ 4000 2550
+Wire Wire Line
+	4000 2550 4000 2050
+Wire Wire Line
+	3700 2550 3400 2550
+Connection ~ 3400 2550
+Wire Wire Line
+	3400 2550 3400 2400
+$Comp
+L Device:C_Small C9
+U 1 1 5D3626CA
+P 2200 950
+F 0 "C9" H 2292 996 50  0000 L CNN
+F 1 "1uF (ceramic)" H 2292 905 50  0000 L CNN
+F 2 "" H 2200 950 50  0001 C CNN
+F 3 "~" H 2200 950 50  0001 C CNN
+	1    2200 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C9
+U 1 1 5D3637F6
+P 1450 1100
+F 0 "C9" H 1542 1146 50  0000 L CNN
+F 1 "1uF (ceramic)" H 1542 1055 50  0000 L CNN
+F 2 "" H 1450 1100 50  0001 C CNN
+F 3 "~" H 1450 1100 50  0001 C CNN
+	1    1450 1100
+	1    0    0    -1  
+$EndComp
+Connection ~ 1450 1200
+Wire Wire Line
+	1450 1200 1550 1200
+Wire Wire Line
+	1450 1000 1450 800 
+Connection ~ 1450 800 
+Wire Wire Line
+	1450 800  1850 800 
+Wire Wire Line
+	2200 850  2200 800 
+Connection ~ 2200 800 
+Wire Wire Line
+	2200 800  2450 800 
+Wire Wire Line
+	2200 1050 2200 1150
+Connection ~ 2200 1150
+Wire Wire Line
+	2200 1150 2150 1150
 $EndSCHEMATC
