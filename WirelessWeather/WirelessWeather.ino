@@ -19,7 +19,6 @@ PubSubClient client(espClient);
 long lastMsg = 0;
 char msg[50];
 int value = 0;
-int pinVCC = 15;
 char temp[10];
 char pressure[10];
 char humidity[10];
@@ -42,7 +41,7 @@ void setup() {
   windvane.begin();
   Serial.println(bme.begin(0x76));
   Wire.setClockStretchLimit(1500); // for some reason needed for ATTINY85
-Serial.println("Setup");
+  Serial.println("Setup");
 }
 
 void setup_wifi() {
@@ -80,7 +79,7 @@ void reconnect() {
 float measureVoltage() {
 
   // Voltage divider R1 = 220k+100k+220k =540k and R2=100k
-  float calib_factor = 5.6; //5.28; // change this value to calibrate the battery voltage
+  float calib_factor = 18.3; //5.28; // change this value to calibrate the battery voltage
   unsigned long raw = analogRead(A0);
   float volt = raw * calib_factor / 1024;
 
@@ -135,8 +134,8 @@ void loop() {
   itoa(lv_battery, batvalue, 10);
 
 
-  //  dtostrf(measureVoltage(), 6, 2, msg);
-  //  client.publish("/WirelessWeather/Battery", msg);
+  dtostrf(measureVoltage(), 6, 2, msg);
+  client.publish("/WirelessWeather/Solar", msg);
 
   //send by MQTT
   client.publish("/WirelessWeather/Temperature", temp );
@@ -151,12 +150,9 @@ void loop() {
 
   delay(100);
   //   Sleep for x Minute
-  //    ESP.deepSleep(SLEEP_MIN * 60 * 1000000);
-  ESP.deepSleep(1 * 10 * 1000000);
-delay(100);
-  // delay(5000);
-
-
+  ESP.deepSleep(SLEEP_MIN * 60 * 1000000);
+ 
+  delay(100);
 
 }
 
