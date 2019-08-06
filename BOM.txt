@@ -14,7 +14,7 @@ Screws and Nuts
 8x washer M3
 4x wood or plastic screws (or knurled brass nuts + screws) (Anemometer)
 2x KFL08 bearings (https://www.dold-mechatronik.de/Flanschlager-8mm-Aluminium-Druckguss-KFL08)
-2x round magnet (neodym) 5mm OD
+3x round magnet (neodym) 5mm OD
 
 Electronics
 10 x Reed switch (NO)
