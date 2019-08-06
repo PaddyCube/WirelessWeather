@@ -8,8 +8,6 @@ Build your own Wireless Weather station. This station includes:
 - Wind direction
 - Battery monitor
 
-Please note, this is not the final version, things will change but in general it is operationable
-
 ## Operation mode
 Wind speed and rain gets detected by pin change interrupt of ATTINYs. 
 There is a power hungry device called WEMOS D1 mini pro, which deep sleeps most time. 
@@ -19,12 +17,15 @@ Every few minutes, it wakes up, collect data from other devices by I2C, send eve
 You find all 3D printed parts at Thingiverse 
 https://www.thingiverse.com/thing:3718078
 
+A video is here https://youtu.be/xa0Dt5vs0kM
+
 ## BOM
 This package includes software for the following components
 - 2x ATTINY85 (wind speed, rain and battery level)
 - 1x ATTINY24 (wind direction)
 - Wemos D1 Mini pro (or other ESP8266 device)
 - BME280
+- Please find a complete BOM in BOM.txt file
 
 Moreover you need some device to program ATTINYs. This can be done with any Arduino device. There are plenty of tutorials out there.
 

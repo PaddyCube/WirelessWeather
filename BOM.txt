@@ -1,0 +1,45 @@
+Screws and Nuts
+20x Knurled brass nuts (OD4mm, 5mm length) (https://www.aliexpress.com/w/wholesale-brass-insert-nut.html?switch_new_app=y)
+30x Screws M3 (DIN 912)
+4x Screw M4 x 60 (DIN 912)
+4x Screw M4
+2x Screw M5 (DIN 912)
+7x counter sink screw M3 (DIN 7991)
+14x Nuts M3
+3x M3 threaded rod 105mm (Stevenson Screen)
+8x Nuts M4
+2x Nuts M5
+1x Alu pipe 8mm OD 95mm
+1x Alu Pipe 8mm OD 50mm
+8x washer M3
+4x wood or plastic screws (or knurled brass nuts + screws) (Anemometer)
+2x KFL08 bearings (https://www.dold-mechatronik.de/Flanschlager-8mm-Aluminium-Druckguss-KFL08)
+2x round magnet (neodym) 5mm OD
+
+Electronics
+10 x Reed switch (NO)
+1x Solar panel 110 x 125mm (https://www.ebay.de/itm/Mini-9V-1-5W-Sonnenkollektor-Solaranlage-Solar-Power-Panel-DIY-f%C3%BCr-Handy-Charger/272626734434?ssPageName=STRK%3AMEBIDX%3AIT&_trksid=p2057872.m2749.l2649)
+1x Battery case
+3x AAA Nimh cells
+4x Capacitor (electrolyte) 4,7uF
+4x Capacitor (ceramic) 100nF
+4x Capacitor (ceramic) 1uF
+1x Schottky Diode SB 5100
+2x Resistor 4k7
+1x Resistor 1M5k
+1x Resistor 220k
+1x Resistor 100k
+2x ATTINY85-20PU
+1x ATTINY24A-PU
+1x WEMOS D1 mini pro
+1x MCP1702-3302 (https://www.reichelt.de/ldo-regler-fest-3-3-v-to-92-mcp-1702-3302-p90114.html?&trstct=pos_0)
+1x MCP1702-5002 (https://www.reichelt.de/ldo-regler-fest-5-v-to-92-mcp-1702-5002-p90115.html)
+1x BME280
+
+
+Others
+Hot glue
+Hot shrink tube
+Wires
+crimp connectors
+
