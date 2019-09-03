@@ -1,0 +1,722 @@
+EESchema Schematic File Version 4
+LIBS:PCB-cache
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector:Screw_Terminal_01x02 GND1
+U 1 1 5D2E117A
+P 900 900
+F 0 "GND1" H 818 1117 50  0000 C CNN
+F 1 "Solar VCC" H 818 1026 50  0000 C CNN
+F 2 "" H 900 900 50  0001 C CNN
+F 3 "~" H 900 900 50  0001 C CNN
+	1    900  900 
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Regulator_Linear:MCP1700-5002E_TO92 U1
+U 1 1 5D2E1AD7
+P 1850 1050
+F 0 "U1" H 1850 901 50  0000 C CNN
+F 1 "MCP1702-5002E_TO92 5V" H 1850 810 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 1850 850 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20001826D.pdf" H 1850 1050 50  0001 C CNN
+	1    1850 1050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C1
+U 1 1 5D2E39D1
+P 1350 950
+F 0 "C1" H 1233 904 50  0000 R CNN
+F 1 "4.7uF" H 1233 995 50  0000 R CNN
+F 2 "" H 1388 800 50  0001 C CNN
+F 3 "~" H 1350 950 50  0001 C CNN
+	1    1350 950 
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	1700 1200 1700 1250
+Wire Wire Line
+	1100 1000 1100 1200
+Wire Wire Line
+	1350 900  1350 800 
+Wire Wire Line
+	1350 1200 1350 1100
+Wire Wire Line
+	1100 1200 1350 1200
+Connection ~ 1350 1200
+Wire Wire Line
+	1550 1200 1550 1050
+Wire Wire Line
+	1350 1200 1450 1200
+Wire Wire Line
+	1100 900  1350 900 
+Wire Wire Line
+	1350 800  1450 800 
+Wire Wire Line
+	1850 800  1850 750 
+Connection ~ 1350 800 
+$Comp
+L Device:CP C2
+U 1 1 5D2E971A
+P 2450 1000
+F 0 "C2" H 2332 954 50  0000 R CNN
+F 1 "4.7uF" H 2332 1045 50  0000 R CNN
+F 2 "" H 2488 850 50  0001 C CNN
+F 3 "~" H 2450 1000 50  0001 C CNN
+	1    2450 1000
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1850 800  2200 800 
+Wire Wire Line
+	2450 800  2450 850 
+Connection ~ 1850 800 
+Wire Wire Line
+	2450 1150 2200 1150
+Wire Wire Line
+	2150 1150 2150 1050
+$Comp
+L pspice:DIODE D1
+U 1 1 5D2EA544
+P 3100 1000
+F 0 "D1" H 3100 1265 50  0000 C CNN
+F 1 "SB 5100" H 3100 1174 50  0000 C CNN
+F 2 "" H 3100 1000 50  0001 C CNN
+F 3 "~" H 3100 1000 50  0001 C CNN
+	1    3100 1000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 1150 2900 1150
+Wire Wire Line
+	2900 1150 2900 1000
+Connection ~ 2450 1150
+Wire Wire Line
+	3300 1000 3350 1000
+Wire Wire Line
+	2450 800  3650 800 
+Wire Wire Line
+	3700 800  3700 900 
+Connection ~ 2450 800 
+$Comp
+L Device:CP C3
+U 1 1 5D2ECB9A
+P 3500 1450
+F 0 "C3" V 3245 1450 50  0000 C CNN
+F 1 "4.7uF" V 3336 1450 50  0000 C CNN
+F 2 "" H 3538 1300 50  0001 C CNN
+F 3 "~" H 3500 1450 50  0001 C CNN
+	1    3500 1450
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	3350 1450 3350 1700
+Wire Wire Line
+	3350 1450 3350 1000
+Connection ~ 3350 1450
+Connection ~ 3350 1000
+Wire Wire Line
+	3350 1000 3700 1000
+Wire Wire Line
+	3650 1450 3650 800 
+Connection ~ 3650 800 
+Wire Wire Line
+	3650 800  3700 800 
+Connection ~ 3650 1450
+Wire Wire Line
+	3400 2400 3600 2400
+$Comp
+L MCU_Microchip_ATtiny:ATtiny24A-PU U5
+U 1 1 5D374910
+P 8850 2300
+F 0 "U5" H 8321 2346 50  0000 R CNN
+F 1 "ATtiny24A-PU WindDir" H 8321 2255 50  0000 R CNN
+F 2 "Package_DIP:DIP-14_W7.62mm" H 8850 2300 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/doc8183.pdf" H 8850 2300 50  0001 C CNN
+	1    8850 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C12
+U 1 1 5D3763C4
+P 7950 1550
+F 0 "C12" H 8042 1596 50  0000 L CNN
+F 1 "100nF" H 8042 1505 50  0000 L CNN
+F 2 "" H 7950 1550 50  0001 C CNN
+F 3 "~" H 7950 1550 50  0001 C CNN
+	1    7950 1550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8850 1400 7950 1400
+Wire Wire Line
+	7950 1400 7950 1450
+Wire Wire Line
+	7950 1650 7950 3200
+Wire Wire Line
+	7950 3200 8850 3200
+$Comp
+L Connector_Generic:Conn_01x04 J7
+U 1 1 5D381A15
+P 10100 2850
+F 0 "J7" H 10018 2425 50  0000 C CNN
+F 1 "ATTINY24" H 10018 2516 50  0000 C CNN
+F 2 "" H 10100 2850 50  0001 C CNN
+F 3 "~" H 10100 2850 50  0001 C CNN
+	1    10100 2850
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	10300 2950 10300 3200
+Wire Wire Line
+	10300 3200 8850 3200
+Connection ~ 8850 3200
+Wire Wire Line
+	10300 2650 10300 1400
+Wire Wire Line
+	10300 1400 8850 1400
+Connection ~ 8850 1400
+Wire Wire Line
+	10550 2100 10550 2850
+Wire Wire Line
+	10550 2850 10300 2850
+Wire Wire Line
+	9450 2100 10550 2100
+Wire Wire Line
+	10300 2750 10450 2750
+Wire Wire Line
+	10450 2750 10450 2300
+Wire Wire Line
+	10450 2300 9450 2300
+$Comp
+L Connector_Generic:Conn_02x05_Odd_Even J8
+U 1 1 5D3AFF2F
+P 10700 1700
+F 0 "J8" H 10750 2117 50  0000 C CNN
+F 1 "ReedSwitches-WindVane" H 10750 2026 50  0000 C CNN
+F 2 "" H 10700 1700 50  0001 C CNN
+F 3 "~" H 10700 1700 50  0001 C CNN
+	1    10700 1700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	11000 1900 11000 3200
+Wire Wire Line
+	11000 3200 10300 3200
+Connection ~ 10300 3200
+Wire Wire Line
+	9450 1800 9750 1800
+Wire Wire Line
+	9750 1800 9750 1500
+Wire Wire Line
+	9750 1500 10500 1500
+Wire Wire Line
+	9450 1900 9800 1900
+Wire Wire Line
+	9800 1900 9800 1600
+Wire Wire Line
+	9800 1600 10500 1600
+Wire Wire Line
+	9450 2000 9850 2000
+Wire Wire Line
+	9850 2000 9850 1700
+Wire Wire Line
+	9850 1700 10500 1700
+Wire Wire Line
+	9450 2200 9950 2200
+Wire Wire Line
+	9950 2200 9950 1800
+Wire Wire Line
+	9950 1800 10500 1800
+Wire Wire Line
+	9450 2400 10000 2400
+Wire Wire Line
+	10000 2400 10000 1900
+Wire Wire Line
+	10000 1900 10500 1900
+Wire Wire Line
+	9450 2800 9900 2800
+Wire Wire Line
+	9900 2800 9900 3000
+Wire Wire Line
+	9900 3000 11100 3000
+Wire Wire Line
+	11100 3000 11100 1800
+Wire Wire Line
+	11100 1800 11000 1800
+Wire Wire Line
+	9450 2700 9850 2700
+Wire Wire Line
+	9850 2700 9850 3050
+Wire Wire Line
+	9850 3050 11150 3050
+Wire Wire Line
+	11150 3050 11150 1700
+Wire Wire Line
+	11150 1700 11000 1700
+Wire Wire Line
+	9450 2600 9800 2600
+Wire Wire Line
+	9800 2600 9800 3100
+Wire Wire Line
+	9800 3100 11200 3100
+Wire Wire Line
+	11200 3100 11200 1600
+Wire Wire Line
+	11200 1600 11000 1600
+Text Notes 7450 7500 0    50   ~ 0
+Wireless Weather
+Wire Wire Line
+	3400 1700 3350 1700
+$Comp
+L Device:C_Small C8
+U 1 1 5D350CBD
+P 3800 2550
+F 0 "C8" V 3571 2550 50  0000 C CNN
+F 1 "1uF (ceramic)" V 3662 2550 50  0000 C CNN
+F 2 "" H 3800 2550 50  0001 C CNN
+F 3 "~" H 3800 2550 50  0001 C CNN
+	1    3800 2550
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4000 2550 4000 2050
+Wire Wire Line
+	3700 2550 3400 2550
+Wire Wire Line
+	3400 2550 3400 2400
+$Comp
+L Device:C_Small C9
+U 1 1 5D3626CA
+P 2200 950
+F 0 "C9" H 2292 996 50  0000 L CNN
+F 1 "1uF (ceramic)" H 2292 905 50  0000 L CNN
+F 2 "" H 2200 950 50  0001 C CNN
+F 3 "~" H 2200 950 50  0001 C CNN
+	1    2200 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C10
+U 1 1 5D3637F6
+P 1450 1100
+F 0 "C10" H 1542 1146 50  0000 L CNN
+F 1 "1uF (ceramic)" H 1542 1055 50  0000 L CNN
+F 2 "" H 1450 1100 50  0001 C CNN
+F 3 "~" H 1450 1100 50  0001 C CNN
+	1    1450 1100
+	1    0    0    -1  
+$EndComp
+Connection ~ 1450 1200
+Wire Wire Line
+	1450 1200 1550 1200
+Wire Wire Line
+	1450 1000 1450 800 
+Connection ~ 1450 800 
+Wire Wire Line
+	1450 800  1850 800 
+Wire Wire Line
+	2200 850  2200 800 
+Connection ~ 2200 800 
+Wire Wire Line
+	2200 800  2450 800 
+Wire Wire Line
+	2200 1050 2200 1150
+Connection ~ 2200 1150
+Wire Wire Line
+	2200 1150 2150 1150
+Connection ~ 3350 1700
+$Comp
+L Device:C_Small C7
+U 1 1 5D33E396
+P 3500 1700
+F 0 "C7" V 3271 1700 50  0000 C CNN
+F 1 "1uF (ceramic)" V 3362 1700 50  0000 C CNN
+F 2 "" H 3500 1700 50  0001 C CNN
+F 3 "~" H 3500 1700 50  0001 C CNN
+	1    3500 1700
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector:Screw_Terminal_01x02 GND2
+U 1 1 5D2EAFA5
+P 3900 900
+F 0 "GND2" H 3980 892 50  0000 L CNN
+F 1 "BAT +" H 3980 801 50  0000 L CNN
+F 2 "" H 3900 900 50  0001 C CNN
+F 3 "~" H 3900 900 50  0001 C CNN
+	1    3900 900 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3650 1450 3650 1750
+Wire Wire Line
+	3350 1700 3350 2050
+Wire Wire Line
+	4000 2050 3900 2050
+Wire Wire Line
+	3350 2050 3300 2050
+Wire Wire Line
+	3600 1750 3600 1700
+Connection ~ 3600 1750
+Wire Wire Line
+	3600 2400 3600 1750
+Wire Wire Line
+	3650 1750 3600 1750
+$Comp
+L Regulator_Linear:MCP1700-3302E_TO92 U2
+U 1 1 5D2EBE65
+P 3600 2050
+F 0 "U2" H 3600 1901 50  0000 C CNN
+F 1 "MCP1700-3302E_TO92 3.3V" H 3600 1810 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 3600 1850 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20001826D.pdf" H 3600 2050 50  0001 C CNN
+	1    3600 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 2550 4000 2550
+$Comp
+L RF_Module:ESP32-WROOM-32 U?
+U 1 1 5D72BE0C
+P 3750 4350
+F 0 "U?" V 3704 5794 50  0000 L CNN
+F 1 "ESP32-WROOM-32" V 3795 5794 50  0000 L CNN
+F 2 "RF_Module:ESP32-WROOM-32" H 3750 2850 50  0001 C CNN
+F 3 "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf" H 3450 4400 50  0001 C CNN
+	1    3750 4350
+	0    1    1    0   
+$EndComp
+Connection ~ 3400 2550
+Wire Wire Line
+	5150 2550 4000 2550
+Connection ~ 4000 2550
+Wire Wire Line
+	2350 2550 3400 2550
+$Comp
+L Connector_Generic:Conn_01x04 J3
+U 1 1 5D740856
+P 4050 3000
+F 0 "J3" H 4130 2992 50  0000 L CNN
+F 1 "I2C" H 4130 2901 50  0000 L CNN
+F 2 "" H 4050 3000 50  0001 C CNN
+F 3 "~" H 4050 3000 50  0001 C CNN
+	1    4050 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 5D751D01
+P 4200 3450
+F 0 "R1" V 3993 3450 50  0000 C CNN
+F 1 "4k7" V 4084 3450 50  0000 C CNN
+F 2 "" V 4130 3450 50  0001 C CNN
+F 3 "~" H 4200 3450 50  0001 C CNN
+	1    4200 3450
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 5D75241E
+P 4200 3600
+F 0 "R2" V 4407 3600 50  0000 C CNN
+F 1 "4k7" V 4316 3600 50  0000 C CNN
+F 2 "" V 4130 3600 50  0001 C CNN
+F 3 "~" H 4200 3600 50  0001 C CNN
+	1    4200 3600
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	2350 2550 2350 3000
+Wire Wire Line
+	4350 3600 4450 3600
+Wire Wire Line
+	5150 2550 5150 2800
+Connection ~ 5150 3600
+Wire Wire Line
+	5150 3600 5150 4350
+Wire Wire Line
+	4350 3450 4450 3450
+Wire Wire Line
+	4450 3450 4450 3600
+Connection ~ 4450 3600
+Wire Wire Line
+	4450 3600 5150 3600
+Wire Wire Line
+	3650 3200 3850 3200
+Wire Wire Line
+	4050 3600 3650 3600
+Wire Wire Line
+	3650 3200 3650 3600
+Connection ~ 3650 3600
+Wire Wire Line
+	3650 3600 3650 3750
+Wire Wire Line
+	3750 3750 3750 3450
+Wire Wire Line
+	3750 3100 3850 3100
+Wire Wire Line
+	4050 3450 3750 3450
+Connection ~ 3750 3450
+Wire Wire Line
+	3750 3450 3750 3100
+Wire Wire Line
+	3850 3000 2350 3000
+Connection ~ 2350 3000
+Wire Wire Line
+	2350 3000 2350 4350
+Wire Wire Line
+	3850 2900 3850 2800
+Wire Wire Line
+	3850 2800 5150 2800
+Connection ~ 5150 2800
+Wire Wire Line
+	5150 2800 5150 3600
+$Comp
+L Connector_Generic:Conn_02x05_Odd_Even J5
+U 1 1 5D787C03
+P 4850 6200
+F 0 "J5" H 4900 6617 50  0000 C CNN
+F 1 "WindVane" H 4900 6526 50  0000 C CNN
+F 2 "" H 4850 6200 50  0001 C CNN
+F 3 "~" H 4850 6200 50  0001 C CNN
+	1    4850 6200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x04 J4
+U 1 1 5D788CED
+P 4500 3000
+F 0 "J4" H 4580 2992 50  0000 L CNN
+F 1 "I2C" H 4580 2901 50  0000 L CNN
+F 2 "" H 4500 3000 50  0001 C CNN
+F 3 "~" H 4500 3000 50  0001 C CNN
+	1    4500 3000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4300 2900 3850 2900
+Connection ~ 3850 2900
+Wire Wire Line
+	4300 3000 3850 3000
+Connection ~ 3850 3000
+Wire Wire Line
+	4300 3100 3850 3100
+Connection ~ 3850 3100
+Wire Wire Line
+	4300 3200 3850 3200
+Connection ~ 3850 3200
+Connection ~ 2350 4350
+Wire Wire Line
+	4550 4950 4550 6000
+Wire Wire Line
+	4550 6000 4650 6000
+Wire Wire Line
+	4250 4950 4250 6100
+Wire Wire Line
+	4250 6100 4650 6100
+Wire Wire Line
+	4150 4950 4150 6200
+Wire Wire Line
+	4150 6200 4650 6200
+Wire Wire Line
+	4050 4950 4050 6300
+Wire Wire Line
+	4050 6300 4650 6300
+Wire Wire Line
+	4650 6400 3950 6400
+Wire Wire Line
+	3950 6400 3950 4950
+Wire Wire Line
+	3850 4950 3850 5300
+Wire Wire Line
+	3850 5300 5350 5300
+Wire Wire Line
+	5350 5300 5350 6100
+Wire Wire Line
+	5350 6100 5150 6100
+Wire Wire Line
+	3750 4950 3750 5400
+Wire Wire Line
+	3750 5400 5450 5400
+Wire Wire Line
+	5450 5400 5450 6200
+Wire Wire Line
+	5450 6200 5150 6200
+Wire Wire Line
+	3650 4950 3650 5500
+Wire Wire Line
+	3650 5500 5550 5500
+Wire Wire Line
+	5550 5500 5550 6300
+Wire Wire Line
+	5550 6300 5150 6300
+Wire Wire Line
+	5150 6400 5150 6550
+Wire Wire Line
+	5150 6550 2350 6550
+$Comp
+L power:GND #PWR?
+U 1 1 5D7EC19D
+P 600 900
+F 0 "#PWR?" H 600 650 50  0001 C CNN
+F 1 "GND" H 605 727 50  0000 C CNN
+F 2 "" H 600 900 50  0001 C CNN
+F 3 "" H 600 900 50  0001 C CNN
+	1    600  900 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	600  900  1100 900 
+Connection ~ 1100 900 
+$Comp
+L power:GND #PWR?
+U 1 1 5D7F1EB3
+P 4450 950
+F 0 "#PWR?" H 4450 700 50  0001 C CNN
+F 1 "GND" H 4455 777 50  0000 C CNN
+F 2 "" H 4450 950 50  0001 C CNN
+F 3 "" H 4450 950 50  0001 C CNN
+	1    4450 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4450 950  4450 900 
+Wire Wire Line
+	4450 900  3700 900 
+Connection ~ 3700 900 
+$Comp
+L Connector_Generic:Conn_01x03 J6
+U 1 1 5D7F86E8
+P 6550 5250
+F 0 "J6" V 6422 5430 50  0000 L CNN
+F 1 "WindSpeed" V 6513 5430 50  0000 L CNN
+F 2 "" H 6550 5250 50  0001 C CNN
+F 3 "~" H 6550 5250 50  0001 C CNN
+	1    6550 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x03 J7
+U 1 1 5D7FF009
+P 6550 6100
+F 0 "J7" V 6422 6280 50  0000 L CNN
+F 1 "Rain" V 6513 6280 50  0000 L CNN
+F 2 "" H 6550 6100 50  0001 C CNN
+F 3 "~" H 6550 6100 50  0001 C CNN
+	1    6550 6100
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2350 4350 2350 6550
+Wire Wire Line
+	5150 4350 6050 4350
+Wire Wire Line
+	6050 4350 6050 4450
+Connection ~ 5150 4350
+Wire Wire Line
+	2350 6650 2350 6550
+Connection ~ 2350 6550
+Wire Wire Line
+	6450 5050 6450 4450
+Wire Wire Line
+	6050 4450 6450 4450
+Wire Wire Line
+	6450 5900 6450 5350
+Wire Wire Line
+	6450 5350 6050 5350
+Wire Wire Line
+	6050 5350 6050 4450
+Connection ~ 6050 4450
+Wire Wire Line
+	6550 5050 6550 4900
+Wire Wire Line
+	6550 4900 5900 4900
+Wire Wire Line
+	5900 6650 2350 6650
+Wire Wire Line
+	5900 4900 5900 5450
+Wire Wire Line
+	6550 5900 6550 5450
+Wire Wire Line
+	6550 5450 5900 5450
+Connection ~ 5900 5450
+Wire Wire Line
+	5900 5450 5900 6650
+$Comp
+L Device:R R3
+U 1 1 5D8AE9D1
+P 6650 4750
+F 0 "R3" H 6720 4796 50  0000 L CNN
+F 1 "R" H 6720 4705 50  0000 L CNN
+F 2 "" V 6580 4750 50  0001 C CNN
+F 3 "~" H 6650 4750 50  0001 C CNN
+	1    6650 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R4
+U 1 1 5D8B6143
+P 6650 5650
+F 0 "R4" H 6720 5696 50  0000 L CNN
+F 1 "R" H 6720 5605 50  0000 L CNN
+F 2 "" V 6580 5650 50  0001 C CNN
+F 3 "~" H 6650 5650 50  0001 C CNN
+	1    6650 5650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6450 5350 6650 5350
+Wire Wire Line
+	6650 5350 6650 5500
+Connection ~ 6450 5350
+Wire Wire Line
+	6650 5900 6650 5800
+Wire Wire Line
+	6650 5050 6650 4900
+Wire Wire Line
+	6650 4600 6650 4450
+Wire Wire Line
+	6650 4450 6450 4450
+Connection ~ 6450 4450
+Wire Wire Line
+	6650 5900 6950 5900
+Wire Wire Line
+	6950 5900 6950 6250
+Wire Wire Line
+	6950 6250 6150 6250
+Wire Wire Line
+	6150 6250 6150 6800
+Wire Wire Line
+	6150 6800 2950 6800
+Wire Wire Line
+	2950 6800 2950 4950
+Connection ~ 6650 5900
+Wire Wire Line
+	6650 5050 7250 5050
+Wire Wire Line
+	7250 5050 7250 6350
+Wire Wire Line
+	7250 6350 6300 6350
+Wire Wire Line
+	6300 6350 6300 6950
+Wire Wire Line
+	6300 6950 2850 6950
+Wire Wire Line
+	2850 6950 2850 4950
+Connection ~ 6650 5050
+$EndSCHEMATC
