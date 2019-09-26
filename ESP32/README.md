@@ -2,8 +2,8 @@
 This folder contains alternative code for ESP32 boards. By using this, less components are needed.
 
 ## Operation mode
-Wind speed and rain gets detected by ESP32's buildin ULP co-processor while main eSP32 sleeps. 
-Every few minutes, ESP32 it wakes up, collect data from other devices by I2C, 
+Wind speed and rain gets detected by ESP32's built-in ULP co-processor while main ESP32 sleeps. 
+Every few minutes, ESP32 wakes up, collect data from other devices by I2C, 
 send everything to your MQTT broker and sleeps again.
 
 ## Project site
