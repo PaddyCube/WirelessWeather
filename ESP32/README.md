@@ -15,7 +15,7 @@ https://www.thingiverse.com/thing:3718078
 This package includes software for the following components
 - ESP32 board (I use ESP32 DEVKIT V1 with 30 GPIOs)
 
-Because I didn't want to learn a new IDE, I used Ardiono IDE to program everything (also ULP part), instead of esp-idf.
+Because I didn't want to learn a new IDE, I used Arduino IDE to program everything (also ULP part), instead of esp-idf.
 To upload ULP code with Arduino IDE, you need ulptool provided by duff2013 (https://github.com/duff2013/ulptool),
 Arduino IDE itself and official packages for Arduino IDE provided by Espressif
 
