@@ -8,6 +8,8 @@ Build your own Wireless Weather station. This station includes:
 - Wind direction
 - Battery monitor
 
+There are two versions available. One uses ESP8622 module and some ATTINYs, one uses ESP32 and only one ATTINY for wind direction. Code and schematics for ESP32 can be found in corresponding folders named as "ESP32".
+
 ## Operation mode
 Wind speed and rain gets detected by pin change interrupt of ATTINYs. 
 There is a power hungry device called WEMOS D1 mini pro, which deep sleeps most time. 
