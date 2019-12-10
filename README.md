@@ -11,7 +11,7 @@ Build your own Wireless Weather station. This station includes:
 There are three versions available: 
 - One uses ESP8622 module and some ATTINYs
 - one uses ESP32 and only one ATTINY for wind direction 
-- one uses an ARduino Mini together with ATTINY for wind direction inside weather station and publish messages by 433 Mhz.
+- one uses an Arduino Mini together with ATTINY24 for wind direction inside weather station and publish messages by 433 Mhz.
 
 Code and schematics for any solution can be found in corresponding subfolders of folder 'code'
 
@@ -25,7 +25,7 @@ Every few minutes, it wakes up, collect data from other devices by I2C, send eve
 Wind speed and rain gets count by ULP co-processor of ESP32 module. Every few minutes, ESP32 wakes from deep sleep, read count values from ULP, power up I2C devices and sends everything to your MQTT broker. Then it sleeps again.
 
 ### Arduino Pro Mini
-Because ESP devices are pretty power hungry, I wanted to build something more power saving. Therefore, a Arduino Mini is used inside the weather station. Most time it sleeps and count wind and rain. Every x minutes, it wakes up, power up I2C devices (BME280 and ATTINY24 for wind direction), reads values and send them using cheap 433MHz module. You find a working example based on ESP8266 module acting as a bridge between 433 Mhz and MQTT, so it receives data over 433MHz and publish them like before using MQTT. 
+Because ESP devices are pretty power hungry, I wanted to build something more power saving. Therefore, a Arduino Pro Mini is used inside the weather station. Most time it sleeps and count wind and rain by interrupts. Every x minutes, it wakes up, power up I2C devices (BME280 and ATTINY24 for wind direction), reads values and send them using cheap 433MHz module. You find a working example based on ESP8266 module acting as a bridge between 433 Mhz and MQTT, so it receives data over 433MHz and publish them like before using MQTT. 
 
 ## Project site
 You find all 3D printed parts at Thingiverse 
@@ -58,22 +58,22 @@ For further information, please see readme file in ESP32 folder
 - 1x 433MHz receiver, transmitter pair
 
 You also need some code and device to receive the data and process them further. This can be done with any device, like Arduino, ESP8266, ESP32, Raspberry PI and so on. To get a complete working example, I added some code for ESP8266 (WEMOS D1 mini pro) which
-acts as some kind of bridge between 433MHz and MQTT meaning it receives the data send by Arduino Mini and send them using MQTT protocol.
+acts as some kind of bridge between 433MHz and MQTT, meaning it receives the data send by Arduino Pro Mini and send them using MQTT protocol.
 
 ## Required Software
-For ATTINYs, you need this package
-https://github.com/SpenceKonde/ATTinyCore
-https://github.com/rambo/TinyWire
+For ATTINYs, you need this package <br>
+https://github.com/SpenceKonde/ATTinyCore <br>
+https://github.com/rambo/TinyWire <br>
 
-For ESP8266 and ESP32, I used this one
-https://arduino.esp8266.com/stable/package_esp8266com_index.json
-https://github.com/knolleary/pubsubclient
-https://github.com/adafruit/Adafruit_BME280_Library
+For ESP8266 and ESP32, I used this one <br>
+https://arduino.esp8266.com/stable/package_esp8266com_index.json <br>
+https://github.com/knolleary/pubsubclient <br>
+https://github.com/adafruit/Adafruit_BME280_Library <br>
 
-When using Arduino Pro mini, you need these packages as well
-https://github.com/rocketscream/Low-Power
-https://github.com/PaulStoffregen/RadioHead
-https://github.com/adafruit/Adafruit_BME280_Library
+When using Arduino Pro mini, you need these packages as well <br>
+https://github.com/rocketscream/Low-Power <br>
+https://github.com/PaulStoffregen/RadioHead <br>
+https://github.com/adafruit/Adafruit_BME280_Library <br>
 
 ## License
 <br>Copyright (c) 2019 by Patrick Weber  
