@@ -7,8 +7,8 @@
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-char msg[63]; // buffer for incoming messages
-incomingmessage message;
+uint8_t msg[63]; // buffer for incoming messages
+incomingmessage * message;
 
 RH_ASK radioHead;
 
@@ -69,6 +69,7 @@ void loop()
   unsigned int lv_wind;
   unsigned int lv_rain;
   unsigned int lv_battery;
+  uint8_t buflen = sizeof(msg);
 
   if (!client.connected())
   {
@@ -76,25 +77,25 @@ void loop()
   }
   client.loop();
 
-  if (radioHead.recv(msg, sizeof(msg)))
+  if (radioHead.recv(msg, &buflen))
   {
     Serial.print("New message arrived: ");
     Serial.println((char *)msg);
 
     // move message to struct
-    message = msg;
+    message = reinterpret_cast<incomingmessage*>((char *)&msg);
 
-    if (message.type == "WW")
+    if (message->type == "WW")
     {
       //send by MQTT
-      client.publish("/WirelessWeather/Temperature", message.temp);
-      client.publish("/WirelessWeather/Pressure", message.pressure);
-      client.publish("/WirelessWeather/Humidity", message.humidity);
-      client.publish("/WirelessWeather/Wind", message.windvalue);
-      client.publish("/WirelessWeather/Rain", message.rainvalue);
-      client.publish("/WirelessWeather/WindDir", message.windpos);
-      client.publish("/WirelessWeather/Battery", message.batvalue);
-      client.publish("/WirelessWeather/Solar", message.solar);
+      client.publish("/WirelessWeather/Temperature", message->temp);
+      client.publish("/WirelessWeather/Pressure", message->pressure);
+      client.publish("/WirelessWeather/Humidity", message->humidity);
+      client.publish("/WirelessWeather/Wind", message->windvalue);
+      client.publish("/WirelessWeather/Rain", message->rainvalue);
+      client.publish("/WirelessWeather/WindDir", message->windpos);
+      client.publish("/WirelessWeather/Battery", message->batvalue);
+      client.publish("/WirelessWeather/Solar", message->solar);
     }
     else
     {

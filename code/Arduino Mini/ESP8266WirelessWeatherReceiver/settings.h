@@ -1,3 +1,6 @@
+#ifndef SETTINGS_H_
+#define SETTINGS_H_
+
 
 // WIFI -settings
 const char *SSID = "YOUR_SSID";
@@ -29,3 +32,5 @@ typedef struct
     char spacer7;
     char solar[6];
 } incomingmessage;
+
+#endif
