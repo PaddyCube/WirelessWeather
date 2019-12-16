@@ -6,7 +6,7 @@ const int WindPin = 2;
 const int RainPin = 3;
 
 // pin for data send
-const int SendPin = 10;
+const int SendPin = 12;
 const int SendPower = 11;
 
 // power for I2C devices

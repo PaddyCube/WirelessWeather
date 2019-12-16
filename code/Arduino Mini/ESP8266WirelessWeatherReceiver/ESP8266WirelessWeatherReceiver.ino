@@ -7,18 +7,18 @@
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-uint8_t msg[63]; // buffer for incoming messages
+uint8_t msg[90]; // buffer for incoming messages
 incomingmessage * message;
 
-RH_ASK radioHead;
+RH_ASK radioHead(2000, 5, 5, 0);
 
 void setup()
 {
 
-  Serial.begin(115200);
-  setup_wifi();
-  client.setServer(MQTT_BROKER, MQTT_PORT);
-
+  Serial.begin(19200);
+ // setup_wifi();
+//  client.setServer(MQTT_BROKER, MQTT_PORT);
+Serial.println("alive");
   if (!radioHead.init())
   {
     Serial.println("Failed to init 433MHz receiver");
@@ -71,21 +71,21 @@ void loop()
   unsigned int lv_battery;
   uint8_t buflen = sizeof(msg);
 
-  if (!client.connected())
+ /* if (!client.connected())
   {
     reconnect();
   }
   client.loop();
-
+*/
   if (radioHead.recv(msg, &buflen))
   {
     Serial.print("New message arrived: ");
     Serial.println((char *)msg);
 
     // move message to struct
-    message = reinterpret_cast<incomingmessage*>((char *)&msg);
+  //  message = reinterpret_cast<incomingmessage*>((char *)&msg);
 
-    if (message->type == "WW")
+   /* if (message->type == "WW")
     {
       //send by MQTT
       client.publish("/WirelessWeather/Temperature", message->temp);
@@ -100,6 +100,6 @@ void loop()
     else
     {
       Serial.println("invalid message");
-    }
+    }*/
   }
 }

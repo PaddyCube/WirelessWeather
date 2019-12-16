@@ -18,7 +18,7 @@ char rainvalue[10];
 char windpos[3];
 char batvalue[6];
 char solar[6];
-char msg[63]; // message to send
+char msg[90]; // message to send
 volatile unsigned long windcount = 0;
 volatile unsigned long raincount = 0;
 volatile unsigned long WakeupCount = 0;
@@ -50,8 +50,6 @@ void loop()
   float lv_temp;
   float lv_pressure;
   float lv_humidity;
-  unsigned int lv_wind;
-  unsigned int lv_rain;
   float lv_battery;
   float lv_solar;
 
@@ -63,9 +61,9 @@ void loop()
   else
   {
 
-    digitalWrite(SendPin, HIGH);
+    digitalWrite(SendPower, HIGH);
     digitalWrite(i2cPower, HIGH);
-    delay(50);
+    delay(100);
 
     Wire.begin();                    // join i2c bus (address optional for master)
     // Wire.setClockStretchLimit(1500); // for some reason needed for ATTINY85
@@ -80,24 +78,26 @@ void loop()
     Serial.print("Publish message: ");
     Serial.println(msg);
 
-    // Read data from BME280
+    // Read data from BME280 multiple times to stabilize
     lv_temp = bme.readTemperature();
-
+    delay(50);
+    lv_temp = bme.readTemperature();
+    delay(50);
+    lv_temp = bme.readTemperature();
+        
     lv_pressure = bme.readPressure();
     //    lv_humidity = bme.readHumidity();
 
     // convert results to char
     dtostrf(lv_temp, 6, 2, temp);
-    Serial.println(temp);
     dtostrf(lv_pressure, 6, 2, pressure);
-    Serial.println(pressure);
     dtostrf(lv_humidity, 6, 2, humidity);
 
     // send Wind speed and rain count
     windvane.getCharPosition(windpos);
 
-    itoa(lv_wind, windvalue, 10);
-    itoa(lv_rain, rainvalue, 10);
+    itoa(windcount, windvalue, 10);
+    itoa(raincount, rainvalue, 10);
 
     // battery level
     lv_battery = measureBattery();
@@ -108,11 +108,13 @@ void loop()
     itoa(lv_solar * 100, solar, 10);
 
     //send data over 433 MHz
-   // sprintf(msg, "%s %s", "WW", temp);
-
     sprintf(msg, "%s|%s|%s|%s|%s|%s|%s|%s|%s|END", "WW", temp, pressure, humidity,windvalue,rainvalue,windpos,batvalue,solar);
     Serial.println(msg);
-    
+   radioHead = RH_ASK(2000, 11, SendPin, false);
+   
+  if (!radioHead.init())
+    Serial.println("433MHz init failed");
+   
     radioHead.send((uint8_t *)msg, strlen(msg));
 
     // reset wind and rain counts
@@ -121,13 +123,13 @@ void loop()
 
     delay(100); // wait to complete send
 
-    digitalWrite(SendPin, LOW); // turn off external devices
+    digitalWrite(SendPower, LOW); // turn off external devices
     digitalWrite(i2cPower, LOW);
   }
 
   // attach Interrupts
   attachInterrupt(digitalPinToInterrupt(WindPin), onWindPulse, FALLING);
-  attachInterrupt(digitalPinToInterrupt(RainPin), onWindPulse, FALLING);
+  attachInterrupt(digitalPinToInterrupt(RainPin), onRainPulse, FALLING);
 
 
   //   Sleep for x Minute
@@ -143,7 +145,7 @@ float measureSolar()
 {
 
   // Voltage divider R1 = 1M and R2=560k
-  float calib_factor = 3.78; // change this value to calibrate the battery voltage
+  float calib_factor = 9.4; // change this value to calibrate the battery voltage
   unsigned long raw = analogRead(A1);
   float volt = raw * calib_factor / 1024;
   return volt;
