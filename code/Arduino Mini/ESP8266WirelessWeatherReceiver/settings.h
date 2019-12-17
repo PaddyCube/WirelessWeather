@@ -16,11 +16,11 @@ const int SLEEP_MIN = 3;
 typedef struct
 {
     char type[2];
-    char temp[6];
+    char temp[10];
     char spacer1;
-    char pressure[6];
+    char pressure[10];
     char spacer2;
-    char humidity[6];
+    char humidity[10];
     char spacer3;
     char windvalue[10];
     char spacer4;

@@ -8,7 +8,6 @@
 
 WindVane windvane;
 Adafruit_BMP280 bme;
-RH_ASK radioHead;
 
 char temp[10];
 char pressure[10];
@@ -23,6 +22,8 @@ volatile unsigned long windcount = 0;
 volatile unsigned long raincount = 0;
 volatile unsigned long WakeupCount = 0;
 
+RH_ASK radioHead(2000, 10, SendPin, false);
+
 void setup()
 {
 
@@ -36,12 +37,6 @@ void setup()
   pinMode(RainPin, INPUT);
   pinMode(SendPower, OUTPUT);
   pinMode(i2cPower, OUTPUT);
-
-  // prepare send data over 433MHz
-  radioHead = RH_ASK(2000, 11, SendPin, false);
-  if (!radioHead.init())
-    Serial.println("433MHz init failed");
-
   delay(100);
 }
 
@@ -65,6 +60,11 @@ void loop()
     digitalWrite(i2cPower, HIGH);
     delay(100);
 
+
+    // prepare send data over 433MHz
+    if (!radioHead.init())
+      Serial.println("433MHz init failed");
+
     Wire.begin();                    // join i2c bus (address optional for master)
     // Wire.setClockStretchLimit(1500); // for some reason needed for ATTINY85
     windvane.begin();
@@ -84,7 +84,7 @@ void loop()
     lv_temp = bme.readTemperature();
     delay(50);
     lv_temp = bme.readTemperature();
-        
+
     lv_pressure = bme.readPressure();
     //    lv_humidity = bme.readHumidity();
 
@@ -108,14 +108,11 @@ void loop()
     itoa(lv_solar * 100, solar, 10);
 
     //send data over 433 MHz
-    sprintf(msg, "%s|%s|%s|%s|%s|%s|%s|%s|%s|END", "WW", temp, pressure, humidity,windvalue,rainvalue,windpos,batvalue,solar);
+    sprintf(msg, "%s|%s|%s|%s|%s|%s|%s|%s|%s|END", "WW", temp, pressure, humidity, windvalue, rainvalue, windpos, batvalue, solar);
     Serial.println(msg);
-   radioHead = RH_ASK(2000, 11, SendPin, false);
-   
-  if (!radioHead.init())
-    Serial.println("433MHz init failed");
-   
+
     radioHead.send((uint8_t *)msg, strlen(msg));
+    radioHead.waitPacketSent();
 
     // reset wind and rain counts
     windcount = 0;

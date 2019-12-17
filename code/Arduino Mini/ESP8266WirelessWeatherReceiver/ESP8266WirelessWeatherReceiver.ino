@@ -83,20 +83,28 @@ void loop()
     Serial.println((char *)msg);
 
     // move message to struct
-  //  message = reinterpret_cast<incomingmessage*>((char *)&msg);
+    message = reinterpret_cast<incomingmessage*>((char *)&msg);
 
-   /* if (message->type == "WW")
-    {
+  //  if (message->type == "WW")
+   // {
+      Serial.println(message->temp);
+ /*    Serial.println(message->pressure);
+      Serial.println(message->humidity);
+      Serial.println(message->windvalue);
+      Serial.println(message->rainvalue);
+      Serial.println(message->windpos);
+      Serial.println(message->batvalue);
+      Serial.println(message->solar);
       //send by MQTT
-      client.publish("/WirelessWeather/Temperature", message->temp);
+   /*   client.publish("/WirelessWeather/Temperature", message->temp);
       client.publish("/WirelessWeather/Pressure", message->pressure);
       client.publish("/WirelessWeather/Humidity", message->humidity);
       client.publish("/WirelessWeather/Wind", message->windvalue);
       client.publish("/WirelessWeather/Rain", message->rainvalue);
       client.publish("/WirelessWeather/WindDir", message->windpos);
       client.publish("/WirelessWeather/Battery", message->batvalue);
-      client.publish("/WirelessWeather/Solar", message->solar);
-    }
+      client.publish("/WirelessWeather/Solar", message->solar); */
+ /*   }
     else
     {
       Serial.println("invalid message");
