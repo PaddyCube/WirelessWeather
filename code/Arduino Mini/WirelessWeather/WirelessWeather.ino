@@ -1,4 +1,4 @@
-#include <Adafruit_BMP280.h>
+#include <Adafruit_BME280.h>
 #include <Wire.h>
 #include "WindVane.h"
 #include "settings.h"
@@ -7,20 +7,30 @@
 #include <SPI.h>    // maybe not needed
 
 WindVane windvane;
-Adafruit_BMP280 bme;
+Adafruit_BME280 bme;
 
+float lv_temp;
+float lv_pressure;
+float lv_humidity;
+float lv_battery;
+float lv_solar;
+
+char msgid[12];
 char temp[10];
 char pressure[10];
 char humidity[10];
 char windvalue[10];
 char rainvalue[10];
-char windpos[3];
+char windpos[4];
 char batvalue[6];
 char solar[6];
 char msg[90]; // message to send
 volatile unsigned long windcount = 0;
 volatile unsigned long raincount = 0;
-volatile unsigned long WakeupCount = 0;
+volatile unsigned long WakeupCount = 99999;
+volatile unsigned long messageID = 0;
+volatile bool windoccur = false;
+volatile bool rainoccur = false;
 
 RH_ASK radioHead(2000, 10, SendPin, false);
 
@@ -42,14 +52,21 @@ void setup()
 
 void loop()
 {
-  float lv_temp;
-  float lv_pressure;
-  float lv_humidity;
-  float lv_battery;
-  float lv_solar;
+
+  // check if wind causes wakeup
+  if (windoccur == true) {
+    windoccur = false;
+    windcount++;
+  }
+
+  // check if rain causes wakeup
+  if (rainoccur == true) {
+    rainoccur = false;
+    raincount++;
+  }
 
   // check if we need to send data
-  if (WakeupCount < (SLEEP_MIN * 60 / 8))
+  if (WakeupCount < (SLEEP_MIN * 60 / 8  ))
   {
     // no data needs to be send, go back to sleep
   }
@@ -58,9 +75,8 @@ void loop()
 
     digitalWrite(SendPower, HIGH);
     digitalWrite(i2cPower, HIGH);
-    delay(100);
-
-
+    delay(50);
+    
     // prepare send data over 433MHz
     if (!radioHead.init())
       Serial.println("433MHz init failed");
@@ -73,10 +89,7 @@ void loop()
 
 
     WakeupCount = 0;
-    // data needs to be send
-    snprintf(msg, 50, "Alive since %ld milliseconds", millis());
-    Serial.print("Publish message: ");
-    Serial.println(msg);
+    messageID++;
 
     // Read data from BME280 multiple times to stabilize
     lv_temp = bme.readTemperature();
@@ -86,7 +99,8 @@ void loop()
     lv_temp = bme.readTemperature();
 
     lv_pressure = bme.readPressure();
-    //    lv_humidity = bme.readHumidity();
+    lv_humidity = bme.readHumidity();
+
 
     // convert results to char
     dtostrf(lv_temp, 6, 2, temp);
@@ -95,9 +109,9 @@ void loop()
 
     // send Wind speed and rain count
     windvane.getCharPosition(windpos);
-
     itoa(windcount, windvalue, 10);
     itoa(raincount, rainvalue, 10);
+    itoa(messageID, msgid, 10);
 
     // battery level
     lv_battery = measureBattery();
@@ -108,7 +122,7 @@ void loop()
     itoa(lv_solar * 100, solar, 10);
 
     //send data over 433 MHz
-    sprintf(msg, "%s|%s|%s|%s|%s|%s|%s|%s|%s|END", "WW", temp, pressure, humidity, windvalue, rainvalue, windpos, batvalue, solar);
+    sprintf(msg, "%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|END", "WW", msgid, temp, pressure, humidity, windvalue, rainvalue, windpos, batvalue, solar);
     Serial.println(msg);
 
     radioHead.send((uint8_t *)msg, strlen(msg));
@@ -125,12 +139,12 @@ void loop()
   }
 
   // attach Interrupts
-  attachInterrupt(digitalPinToInterrupt(WindPin), onWindPulse, FALLING);
-  attachInterrupt(digitalPinToInterrupt(RainPin), onRainPulse, FALLING);
+  attachInterrupt(digitalPinToInterrupt(WindPin), onWindPulse, RISING);
+  attachInterrupt(digitalPinToInterrupt(RainPin), onRainPulse, RISING);
 
 
   //   Sleep for x Minute
-  LowPower.powerDown(SLEEP_1S, ADC_OFF, BOD_OFF);
+  LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
 
   // back from sleep
   detachInterrupt(digitalPinToInterrupt(WindPin));
@@ -161,14 +175,12 @@ float measureBattery()
 
 void onWindPulse()
 {
-  windcount++;
-  delay(2); // delay for debounce
+  windoccur = true;
 }
 
 void onRainPulse()
 {
-  raincount++;
-  delay(2); // delay for debounce
+  rainoccur = true;
 }
 
 void onTimerWake()

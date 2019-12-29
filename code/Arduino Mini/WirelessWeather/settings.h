@@ -1,5 +1,7 @@
-// Sleep settings for ESP8266
-const int SLEEP_MIN = 1;
+// Sleep settings (max sleep in min, only occurs if no wind or rain)
+// Wind an rain trigger interrupt which gets counted as wakeup. So when high wind or lot of rain
+// occur, update interval is less than 15 min)
+const int SLEEP_MIN = 15;
 
 // Pins for wind and rain count
 const int WindPin = 2;
