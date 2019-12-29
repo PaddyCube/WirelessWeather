@@ -1,4 +1,6 @@
-Screws and Nuts
+#---------------------------------------
+# Screws and Nuts
+#---------------------------------------
 20x Knurled brass nuts (OD4mm, 5mm length) (https://www.aliexpress.com/w/wholesale-brass-insert-nut.html?switch_new_app=y)
 30x Screws M3 (DIN 912)
 4x Screw M4 x 60 (DIN 912)
@@ -16,7 +18,9 @@ Screws and Nuts
 2x KFL08 bearings (https://www.dold-mechatronik.de/Flanschlager-8mm-Aluminium-Druckguss-KFL08)
 3x round magnet (neodym) 5mm OD
 
-Electronics
+#---------------------------------------
+# Electronics
+#---------------------------------------
 10 x Reed switch (NO)
 1x Solar panel 110 x 125mm (https://www.ebay.de/itm/Mini-9V-1-5W-Sonnenkollektor-Solaranlage-Solar-Power-Panel-DIY-f%C3%BCr-Handy-Charger/272626734434?ssPageName=STRK%3AMEBIDX%3AIT&_trksid=p2057872.m2749.l2649)
 1x Battery case
@@ -29,15 +33,33 @@ Electronics
 1x Resistor 1M5k
 1x Resistor 220k
 1x Resistor 100k
+1x BME280
+
+Next depends on the target solution you want to build
+
+# ---- ESP8266 using ATTINYs for count wind/rain and wind direction
 2x ATTINY85-20PU
 1x ATTINY24A-PU
 1x WEMOS D1 mini pro
 1x MCP1702-3302 (https://www.reichelt.de/ldo-regler-fest-3-3-v-to-92-mcp-1702-3302-p90114.html?&trstct=pos_0)
 1x MCP1702-5002 (https://www.reichelt.de/ldo-regler-fest-5-v-to-92-mcp-1702-5002-p90115.html)
-1x BME280
+
+# ---- ESP32 using ATTINY24 for wind direction
+1x ATTINY24A-PU
+1x ESP32 (DOIT DevKit V1 with 30 GPIOs)
+1x MCP1826S-3302E (https://www.mouser.de/ProductDetail/Microchip-Technology/MCP1826S-3302E-AB?qs=gsqZ4L1luKrs1V8F4RYdLQ%3D%3D&vip=1&gclid=EAIaIQobChMI9b7pvqKr5gIVCOh3Ch2txA8SEAQYASABEgIlAPD_BwE)
+1x MCP1702-5002 
+
+# ---- Arduino Pro Mini using ATTINY24 for wind direction
+1x ATTINY24A-PU
+1x Arduino Pro Mini 8Mhz, 3.3V (or ATMEGA328P)
+1x MCP1702-3302 (https://www.reichelt.de/ldo-regler-fest-3-3-v-to-92-mcp-1702-3302-p90114.html?&trstct=pos_0)
+1x MCP1702-5002 (https://www.reichelt.de/ldo-regler-fest-5-v-to-92-mcp-1702-5002-p90115.html)
 
 
-Others
+#---------------------------------------
+# Others
+#---------------------------------------
 Hot glue
 Hot shrink tube
 Wires
